@@ -4,17 +4,27 @@ const port = 4000
 //import notfound
 const notFound = require('./middlewares/notFound.js')
 const handleErrors = require('./middlewares/handleErrors.js')
+//roouter
+const moviesRouter = require('./routers/movies.js')
 
+
+
+//use per visualizzare img nel folder public(asset statici)
 app.use(express.static('public'))
+//middlewares che permette la lettura di un body(post, put)
+app.use(express.json())
 
 
 app.get('/', (req, res) => {
     res.send('Welcome in our homepage')
 })
 
+app.use('/movies', moviesRouter)
+
+
 //use middlewares 404
 app.use(notFound);
-//use 500
+//use middlewares 500
 app.use(handleErrors)
 
 app.listen(port, () =>{
