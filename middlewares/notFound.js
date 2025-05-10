@@ -1,5 +1,5 @@
 function notFound(req, res, next){
-    
+
     res.status(404)
     res.json({
         errorStatus: 404,
@@ -8,4 +8,4 @@ function notFound(req, res, next){
 
 }
 
-module.exports = notFound();
+module.exports = notFound;
