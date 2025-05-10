@@ -1,11 +1,10 @@
 //INDEX
 function getList(req, res) {
-    res.send('index');  // <--- qui ho cambiato in res.send()
+    res.send('index');  
 }
-
 //SHOW
 function getById(req, res) {
-    res.send('show');  // <--- qui ho cambiato in res.send()
+    res.send('show');  
 }
 
 module.exports = { getList, getById }

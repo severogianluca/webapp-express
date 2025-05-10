@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();  // <-- Attento alla "R" maiuscola
+const router = express.Router(); 
 const movieController = require('../controllers/moviesController');
 
 // Rotte definite con il controller
