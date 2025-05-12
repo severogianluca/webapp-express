@@ -2,12 +2,23 @@ const connection = require('../data/conn');
 
 // INDEX
 function getList(req, res) {
-    const sql = 'SELECT * FROM movies';
+    const sql = `
+    SELECT 
+    movies.*, 
+    ROUND(AVG(reviews.vote), 2) AS average_vote
+FROM 
+    movies 
+LEFT JOIN 
+    reviews  ON movies.id = reviews.movie_id
+GROUP BY 
+    movies.id;
+
+    `;
 
     connection.query(sql, (err, results) => {
         if (err) return res.status(500).json({ error: 'Database query failed' });
         res.json(results.map(result => ({
-            ...result, imagePath : 'http://127.0.0.1:4000/' + result.image 
+            ...result, imagePath: 'http://127.0.0.1:4000/' + result.image
         })));
     });
 }
@@ -30,7 +41,7 @@ function getById(req, res) {
 
         const currentFilm = filmsResults[0];
         const film = {
-            ...currentFilm, imagePath : 'http://127.0.0.1:4000/' + currentFilm.image
+            ...currentFilm, imagePath: 'http://127.0.0.1:4000/' + currentFilm.image
         }
         connection.query(reviewsSql, [id], (err, reviewsResults) => {
             if (err) return res.status(500).json({ error: 'Database query failed' });
