@@ -6,8 +6,13 @@ const notFound = require('./middlewares/notFound.js')
 const handleErrors = require('./middlewares/handleErrors.js')
 //roouter
 const moviesRouter = require('./routers/movies.js')
+//cors import
+const cors = require('cors')
 
 
+app.use(cors({
+    origin: process.env.FE_APP
+}));
 
 //use per visualizzare img nel folder public(asset statici)
 app.use(express.static('public'))
