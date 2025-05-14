@@ -37,9 +37,6 @@ function getById(req, res) {
     WHERE
     movies.id = ?
     `;
-
-
-
     const reviewsSql = `
         SELECT reviews.*
         FROM reviews
@@ -61,6 +58,31 @@ function getById(req, res) {
             res.json(film);
         });
     });
+
 }
 
-module.exports = { getList, getById };
+
+ function insertReviews(req, res){
+
+    const { id } = req.params;
+    const{name, text, vote} = req.body
+
+    const sql=`
+    INSERT INTO reviews(movie_id, name, vote, text) VALUES (?,?, ?, ?);
+    `
+
+    connection.query(sql, [id, name, vote, text], (err, results) => {
+        if (err) {
+            return res.status(500).json({
+                errorMessage: err.sqlMessage
+            })
+        }
+        return res.status(201).json({
+            messagge: results
+        })
+
+    })
+
+ }
+
+module.exports = { getList, getById, insertReviews };
