@@ -27,7 +27,19 @@ GROUP BY
 function getById(req, res) {
     const { id } = req.params;
 
-    const filmsSql = 'SELECT * FROM movies WHERE id = ?';
+    const filmsSql = `
+    SELECT
+    movies.*, ROUND(AVG(reviews.vote), 2) AS average_vote
+    FROM
+    movies
+        LEFT JOIN
+    reviews ON movies.id = reviews.movie_id
+    WHERE
+    movies.id = ?
+    `;
+
+
+
     const reviewsSql = `
         SELECT reviews.*
         FROM reviews
