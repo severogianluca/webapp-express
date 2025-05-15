@@ -61,13 +61,36 @@ function getById(req, res) {
 
 }
 
+//POST x nuovi film
+function insertMovie(req, res) {
 
- function insertReviews(req, res){
+    const { title, director, abstract } = req.body
+
+    const sql = `
+    INSERT INTO movies(title, director, abstract) VALUES (?, ?, ?);
+    `
+    connection.query(sql, [title, director, abstract],(err, results) => {
+        console.log(results)
+        if (err) {
+            return res.status(500).json({
+                errorMessage: err.sqlMessage
+            })
+        }
+        return res.status(201).json({
+            messagge: results
+            
+        })
+        
+    })
+}
+
+//POST x nuove recensioni
+function insertReviews(req, res) {
 
     const { id } = req.params;
-    const{name, text, vote} = req.body
+    const { name, text, vote } = req.body
 
-    const sql=`
+    const sql = `
     INSERT INTO reviews(movie_id, name, vote, text) VALUES (?,?, ?, ?);
     `
 
@@ -83,6 +106,6 @@ function getById(req, res) {
 
     })
 
- }
+}
 
-module.exports = { getList, getById, insertReviews };
+module.exports = { getList, getById, insertReviews, insertMovie };
