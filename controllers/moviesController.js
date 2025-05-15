@@ -64,12 +64,14 @@ function getById(req, res) {
 //POST x nuovi film
 function insertMovie(req, res) {
 
-    const { title, director, abstract } = req.body
+    const { title, director, release_year, image, abstract } = req.body
+    const imageName = req.file.filename
+
 
     const sql = `
-    INSERT INTO movies(title, director, abstract) VALUES (?, ?, ?);
+    INSERT INTO movies(title, director, release_year, image, abstract) VALUES (?, ?, ?, ?, ?);
     `
-    connection.query(sql, [title, director, abstract],(err, results) => {
+    connection.query(sql, [title, director, release_year, imageName, abstract], (err, results) => {
         console.log(results)
         if (err) {
             return res.status(500).json({
@@ -78,9 +80,9 @@ function insertMovie(req, res) {
         }
         return res.status(201).json({
             messagge: results
-            
+
         })
-        
+
     })
 }
 
